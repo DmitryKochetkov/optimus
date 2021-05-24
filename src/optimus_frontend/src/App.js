@@ -1,7 +1,7 @@
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
-// import CreateScenario from './pages/CreateScenario'
 import Layout from "./components/Layout";
 import ScenarioListPage from "./pages/ScenarioListPage";
+import CreateScenarioPage from "./pages/CreateScenarioPage";
 
 function App() {
   return (
@@ -9,9 +9,9 @@ function App() {
         <Layout>
           <Switch>
             <Route exact path="/scenarios" component={ScenarioListPage}/>
-            {/*<Route path="/scenario/create">*/}
-            {/*  <CreateScenario />*/}
-            {/*</Route>*/}
+            <Route path="/scenarios/create">
+              <CreateScenarioPage />
+            </Route>
           </Switch>
         </Layout>
       </BrowserRouter>

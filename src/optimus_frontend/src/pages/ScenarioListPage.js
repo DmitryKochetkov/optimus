@@ -62,7 +62,7 @@ class ScenarioListPage extends React.Component {
             <Container maxWidth="md">
                 <h1>Сценарии</h1>
                 {scenarioList}
-                <Button variant="contained" color="primary" component={Link} to="/campaigns/create">
+                <Button variant="contained" color="primary" component={Link} to="/scenarios/create">
                     Новая кампания
                 </Button>
             </Container>
