@@ -10,8 +10,7 @@ export default function CreateScenario() {
     const initialFormValues = {
         title: "",
         description: "",
-        type: "",
-
+        type: ""
     };
 
     const [activeStep, setActiveStep] = useState(0);

@@ -2,7 +2,7 @@ import React from "react";
 import {Container, List, ListItem, ListItemAvatar, ListItemText} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import {Link} from "react-router-dom";
-import {InsertDriveFile} from "@material-ui/icons";
+import {InsertDriveFileRounded} from "@material-ui/icons";
 
 class DataSourcesPage extends React.Component {
     constructor(props) {
@@ -21,7 +21,7 @@ class DataSourcesPage extends React.Component {
         if (response.ok) {
             const json = await response.json();
             this.setState({
-                scenarios: json
+                dataSources: json
             });
         }
         else {
@@ -33,7 +33,7 @@ class DataSourcesPage extends React.Component {
         let dataSourcesList = [];
         if (this.state.dataSources.content) {
             dataSourcesList = this.state.dataSources.content.map((dataSource) => {
-                let avatar = <InsertDriveFile/>;
+                let avatar = <InsertDriveFileRounded/>;
 
                 return <ListItem button>
                     <ListItemAvatar>
@@ -41,7 +41,8 @@ class DataSourcesPage extends React.Component {
                     </ListItemAvatar>
 
                     <ListItemText
-                        primary={dataSource.title}
+                        primary={dataSource.name}
+                        secondary={'Тип: ' + dataSource.type}
                     />
                 </ListItem>
             });

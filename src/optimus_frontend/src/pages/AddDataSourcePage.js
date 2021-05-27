@@ -3,18 +3,40 @@ import {Container, Grid, TextField} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import FileUploader from "../components/FileUploader";
 import {Alert} from "@material-ui/lab";
-// import FileUploader from "../components/FileUploader";
+import {useHistory} from "react-router-dom";
 
 export default function AddDataSourcePage() {
-    const [file, setFile] = useState({});
+    const initialFormValues = {
+        name: "",
+        file: null
+    };
+    const history = useHistory();
+
+    const [formValues, setFormValues] = useState(initialFormValues);
     const [error, setError] = useState(null);
 
+    const handleFieldChange = e => {
+        const {name, value} = e.target;
+        setFormValues(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    }
+
+    const handleFileChange = e => {
+        const file = e;
+        setFormValues(prev => ({
+            ...prev,
+            file: file
+        }));
+    }
+
     const handleSubmit = async () => {
-        console.log(file);
+        console.log(formValues.file);
 
         const formData = new FormData();
-        formData.append('file', file);
-        formData.append('title', 'title');
+        formData.append('file', formValues.file);
+        formData.append('name', formValues.name);
 
         try {
             const response = await fetch('/api/data-sources', {
@@ -22,12 +44,17 @@ export default function AddDataSourcePage() {
                 body: formData
             });
 
-            if (!response.ok) {
+            if (response.ok) {
+                setError(null);
+                history.push('/data-sources');
+            }
+            else {
                 setError(response.status);
             }
         }
         catch (error) {
             setError(error);
+            console.log(error);
         }
     }
 
@@ -37,11 +64,11 @@ export default function AddDataSourcePage() {
                 <h1>Добавление источника данных</h1>
 
                 <Grid item xs={12}>
-                    <TextField id="title" name="title" label="Название" variant="outlined" fullWidth />
+                    <TextField id="name" name="name" label="Название" variant="outlined" fullWidth onChange={handleFieldChange}/>
                 </Grid>
 
                 <Grid item xs={12} align={'center'}>
-                    <FileUploader handleChange={setFile}/>
+                    <FileUploader onChange={handleFileChange}/>
                 </Grid>
 
                 {error ? <Grid item xs={12}><Alert severity="error">Ошибка при подключении к серверу.</Alert></Grid> : <></>}

@@ -27,13 +27,16 @@ export default function FileUploader(props) {
     const classes = useStyles();
     const [filename, setFilename] = useState(null);
 
-    const handleChange = e => {
+    const onChange = e => {
         const file = e.target.files[0];
         if (file) {
             setFilename(file.name);
-            props.handleChange(file);
+            props.onChange(file);
         }
-        else setFilename(null);
+        else{
+            setFilename(null);
+            props.onChange(null);
+        }
     };
 
     initializeFileTypeIcons();
@@ -45,7 +48,7 @@ export default function FileUploader(props) {
                 accept="text/csv"
                 hidden
                 id="uploader_input"
-                onChange={handleChange}
+                onChange={onChange}
             />
             <label htmlFor="uploader_input">
                 {
